@@ -19,9 +19,9 @@ const StyledNameCustomization = styled.div`
 	}
 	.right_border {
 		width: 7px;
-		height: 127px;
+		height: 126px;
 		background-color: #4285f4;
-		border-bottom-left-radius: 15px;
+		border-bottom-left-radius: 13px;
 	}
 `
 

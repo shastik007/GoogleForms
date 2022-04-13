@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import forms from '../assets/forms.png'
-import HeaderNavigation from '../components/HeaderNavigation'
+import HeaderNavigation from '../components/Header/HeaderNavigation'
 
 const StyledHeader = styled.header`
 	width: 100%;
