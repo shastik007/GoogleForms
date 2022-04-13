@@ -1,6 +1,6 @@
 import './App.css'
-import Header from './containers/Header'
-import Quiz from './containers/Quiz'
+import { Header } from './containers/Header'
+import { Quiz } from './containers/Quiz'
 
 function App() {
 	return (

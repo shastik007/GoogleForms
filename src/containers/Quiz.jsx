@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import NameCustomization from '../components/Quiz/NameCustomization'
+import { NameCustomization } from '../components/Quiz/NameCustomization'
 
 const StyledQuiz = styled.div`
 	background-color: #ede7f6;
@@ -8,7 +8,7 @@ const StyledQuiz = styled.div`
 	height: 600px;
 `
 
-const Quiz = () => {
+export const Quiz = () => {
 	return (
 		<StyledQuiz>
 			<NameCustomization />
@@ -16,4 +16,4 @@ const Quiz = () => {
 	)
 }
 
-export default Quiz
+

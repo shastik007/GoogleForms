@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Input from '../UI/Input'
+import { Input } from '../UI/Input'
 
 const StyledNameCustomization = styled.div`
 	width: 768px;
@@ -23,25 +23,28 @@ const StyledNameCustomization = styled.div`
 		background-color: #4285f4;
 		border-bottom-left-radius: 13px;
 	}
+	.inputWrapper div div {
+		margin-bottom: 20px;
+	}
 `
 
-const NameCustomization = () => {
+export const NameCustomization = () => {
 	return (
 		<StyledNameCustomization>
 			<div className='top_border' />
 			<form>
 				<div className='right_border' />
-				<div>
+				<div className='inputWrapper'>
 					<div>
-						<Input placeholder='New Form' fontsize={32} />
-					</div>
-					<div>
-						<Input placeholder='description' fontsize={14} />
+						<div>
+							<Input placeholder='New Form' fontsize={32} />
+						</div>
+						<div>
+							<Input placeholder='description' fontsize={14} />
+						</div>
 					</div>
 				</div>
 			</form>
 		</StyledNameCustomization>
 	)
 }
-
-export default NameCustomization

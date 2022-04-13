@@ -10,7 +10,7 @@ const StyledHeaderNavigation = styled.nav`
 	}
 `
 
-const HeaderNavigation = () => {
+export const HeaderNavigation = () => {
 	return (
 		<StyledHeaderNavigation>
 			<ul>
@@ -22,5 +22,3 @@ const HeaderNavigation = () => {
 		</StyledHeaderNavigation>
 	)
 }
-
-export default HeaderNavigation

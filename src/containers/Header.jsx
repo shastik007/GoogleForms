@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import forms from '../assets/forms.png'
-import HeaderNavigation from '../components/Header/HeaderNavigation'
+import { HeaderNavigation } from '../components/Header/HeaderNavigation'
 
 const StyledHeader = styled.header`
 	width: 100%;
@@ -22,7 +22,7 @@ const StyledHeader = styled.header`
 	}
 `
 
-const Header = () => {
+export const Header = () => {
 	return (
 		<StyledHeader>
 			<div className='logo'>
@@ -33,5 +33,3 @@ const Header = () => {
 		</StyledHeader>
 	)
 }
-
-export default Header
