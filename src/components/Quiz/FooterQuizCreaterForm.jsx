@@ -33,7 +33,7 @@ export const FooterQuizCreaterForm = ({ qwestionId }) => {
 		dispatch(testCreatorActions.copyQwestion(qwestionId))
 	}
 	const deleteQwestion = () => {
-		dispatch(testCreatorActions.deleteQwestion(qwestionId))
+		dispatch(testCreatorActions.deleteQwestion({qwestionId}))
 	}
 
 	return (

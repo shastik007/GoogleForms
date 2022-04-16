@@ -45,7 +45,7 @@ const StyledQuizMakerForm = styled.form`
 export const QuizMakerForm = ({ information }) => {
 	const dispatch = useDispatch()
 	const [modal, ToggleModal] = useState(false)
-	const [Type, setType] = useState(QustionTypes[0])
+	const [type, setType] = useState(QustionTypes[0])
 	const questionValue = useInput('')
 	const toggleModal = (e) => {
 		e.preventDefault()
@@ -63,6 +63,48 @@ export const QuizMakerForm = ({ information }) => {
 			}),
 		)
 	}
+
+	const ModalRendering = () => {
+		return (
+			<>
+				{modal && (
+					<Modal cancel={toggleModal}>
+						{QustionTypes.map((el) => {
+							return (
+								<TypeItem
+									onClick={() => addType(el)}
+									key={el.id}
+								>
+									<img width={17} src={el.icon} alt='' />
+									<p>{el.text}</p>
+								</TypeItem>
+							)
+						})}
+					</Modal>
+				)}
+			</>
+		)
+	}
+
+	const AnswerRendering = () => {
+		return (
+			<>
+				{information.answers.length > 0 &&
+					information.answers.map((el) => {
+						return (
+							<AnswerInput
+								type={type.type}
+								answerIcon={type.iconAnswer}
+								qwestionId={information.id}
+								answerId={el.id}
+								key={el.id}
+							/>
+						)
+					})}
+			</>
+		)
+	}
+
 	return (
 		<StyledQuizMakerForm>
 			<header className='header'>
@@ -80,32 +122,16 @@ export const QuizMakerForm = ({ information }) => {
 				</div>
 				<MdOutlineImage fontSize={25} />
 				<Select
-					type={Type}
+					type={type}
 					onClick={toggleModal}
 					height={40}
 					width={40}
 				/>
-				{modal && (
-					<Modal cancel={toggleModal}>
-						{QustionTypes.map((el) => {
-							return (
-								<TypeItem
-									onClick={() => addType(el)}
-									key={el.id}
-								>
-									<img width={17} src={el.icon} alt='' />
-									<p>{el.text}</p>
-								</TypeItem>
-							)
-						})}
-					</Modal>
-				)}
+
+				{ModalRendering()}
 			</section>
 			<div className='answerList'>
-				{information.answers.length > 0 &&
-					information.answers.map((el) => {
-						return <AnswerInput qwestionId={information.id} answerId={el.id} icon={Type.icon} key={el.id} />
-					})}
+				{AnswerRendering()}
 				<QuizAnswerCreater onClick={createAnswer} />
 			</div>
 			<FooterQuizCreaterForm qwestionId={information.id} />

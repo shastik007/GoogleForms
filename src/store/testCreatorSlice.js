@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, nanoid } from '@reduxjs/toolkit'
 
 const init = {
 	title: 'New Form',
@@ -8,14 +8,10 @@ const init = {
 		{
 			question: 'how are you?',
 			answers: [],
-			currectA: 1,
-			id: Math.random().toString(),
-		},
-		{
-			question: 'how are you?',
-			answers: [],
-			currectA: 1,
-			id: Math.random().toString(),
+			currectAnswer: [],
+			duration:1,
+            important:false,
+			id: nanoid(),
 		},
 	],
 }
@@ -28,7 +24,7 @@ export const testCreatorSlice = createSlice({
 			const { id } = actions.payload
 			const currentQwestion = state.questions.find((el) => el.id === id)
 			currentQwestion.answers.push({
-				id: Math.random().toString(),
+				id: nanoid(),
 			})
 		},
 		deleteAnswer: (state, actions) => {
@@ -59,14 +55,13 @@ export const testCreatorSlice = createSlice({
 			state.description = actions.payload
 		},
 		addQwestion: (state, actions) => {
-			state.questions.push({ id: Math.random().toString(), answers: [] })
+			state.questions.push({ id: nanoid(), answers: [] })
 		},
 		deleteQwestion: (state, actions) => {
 			const { qwestionId } = actions.payload
-			state.questions.splice(
-				state.questions.findIndex((el) => el.id === qwestionId),
-				1,
-			)
+			const currentQwestionIndex = state.questions.findIndex((el) => el.id === qwestionId)
+			state.questions.splice(currentQwestionIndex,1)
+			
 		},
 		copyQwestion: (state, actions) => {
 			const qwestionId = actions.payload
@@ -75,13 +70,13 @@ export const testCreatorSlice = createSlice({
 			)
 			state.questions.push({
 				...currentQwestion,
-				answers:currentQwestion.answers.map(el => {
-					return {
-						...el,
-						id:Math.random().toString(),
-					}
-				}),
-				id: Math.random().toString(),
+				// answers: currentQwestion.answers.map((el) => {
+				// 	return {
+				// 		...el,
+				// 		id: nanoid(),
+				// 	}
+				// }),
+				id: nanoid(),
 			})
 		},
 	},

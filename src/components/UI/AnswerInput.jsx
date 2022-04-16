@@ -30,7 +30,7 @@ const StyledAnswerInputWrapper = styled.div`
 	}
 `
 
-export const AnswerInput = ({ icon, type, answerId, qwestionId }) => {
+export const AnswerInput = ({ type, answerId, qwestionId, answerIcon }) => {
 	const dispatch = useDispatch()
 	const changeInput = (e) => {
 		dispatch(
@@ -52,7 +52,7 @@ export const AnswerInput = ({ icon, type, answerId, qwestionId }) => {
 	return (
 		<StyledAnswerInputWrapper>
 			<div>
-				<img src={icon} alt='' />
+				{answerIcon}
 				<StyledAnswerInput
 					onChange={changeInput}
 					fontSize={16}
