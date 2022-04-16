@@ -1,10 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Input } from '../UI/Input'
-
-
+import { useInput } from '../../hooks/useInput'
+import { useSelector, useDispatch } from 'react-redux'
+import { testCreatorActions } from '../../store/testCreatorSlice'
 
 export const NameCustomization = () => {
+	const state = useSelector((state) => state)
+	const dispatch = useDispatch()
+	const testTitle = useInput('')
+	const testDescription = useInput('')
+
+	const onChangeTitle = (e) => {
+		dispatch(testCreatorActions.changeTitle(testTitle.value))
+		testTitle.onChange(e)
+	}
+	const onChangeDescription = (e) => {
+		dispatch(testCreatorActions.changeDescription(testDescription.value))
+		testDescription.onChange(e)
+	}
 	return (
 		<StyledNameCustomization>
 			<div className='top_border' />
@@ -13,7 +27,9 @@ export const NameCustomization = () => {
 				<div className='inputWrapper'>
 					<div>
 						<Input
-						    maxLength={80}
+							onChange={onChangeTitle}
+							value={testTitle.value}
+							maxLength={80}
 							placeholder='New Form'
 							width={100}
 							fontsize={32}
@@ -21,6 +37,8 @@ export const NameCustomization = () => {
 					</div>
 					<div>
 						<Input
+							onChange={onChangeDescription}
+							value={testDescription.value}
 							placeholder='description'
 							width={100}
 							fontsize={14}
@@ -31,10 +49,6 @@ export const NameCustomization = () => {
 		</StyledNameCustomization>
 	)
 }
-
-
-
-
 
 const StyledNameCustomization = styled.div`
 	width: 768px;

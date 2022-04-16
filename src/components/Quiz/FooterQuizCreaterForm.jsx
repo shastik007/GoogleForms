@@ -4,6 +4,8 @@ import { MdContentCopy } from 'react-icons/md'
 import { RiDeleteBinLine } from 'react-icons/ri'
 import menu from '../../assets/menu.png'
 import { FooterCheckbox } from './FooterCheckbox'
+import { useDispatch } from 'react-redux'
+import { testCreatorActions } from '../../store/testCreatorSlice'
 
 const StyledFooterQuizCreaterForm = styled.footer`
 	display: flex;
@@ -25,12 +27,20 @@ const StyledFooterQuizCreaterForm = styled.footer`
 	}
 `
 
-export const FooterQuizCreaterForm = () => {
+export const FooterQuizCreaterForm = ({ qwestionId }) => {
+	const dispatch = useDispatch()
+	const copyQwestion = () => {
+		dispatch(testCreatorActions.copyQwestion(qwestionId))
+	}
+	const deleteQwestion = () => {
+		dispatch(testCreatorActions.deleteQwestion(qwestionId))
+	}
+
 	return (
 		<StyledFooterQuizCreaterForm>
 			<div className='wrapper'>
-				<MdContentCopy size={20} />
-				<RiDeleteBinLine size={20} />
+				<MdContentCopy onClick={copyQwestion} size={20} />
+				<RiDeleteBinLine onClick={deleteQwestion} size={20} />
 				<div className='middle_border' />
 				<span>mandatory question</span>
 				<FooterCheckbox />

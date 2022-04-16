@@ -9,10 +9,11 @@ const StyledAnswerCreater = styled.div`
   margin-bottom: 15px;
 `
 
-export const QuizAnswerCreater = () => {
+export const QuizAnswerCreater = ({onClick}) => {
 	return (
 		<StyledAnswerCreater>
 			<Input
+			    onClick={onClick}
 				width={20}
 				defaultValue='create new answer'
 				placeholder='create new answer'

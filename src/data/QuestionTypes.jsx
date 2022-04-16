@@ -13,12 +13,12 @@ export const QustionTypes = [
 		icon: listIcon,
 	},
 	{
-		type: 'checkbox',
+		type: 'text',
 		text: 'multiple choose',
 		icon: multi_choose,
 	},
 	{
-		type: 'radio',
+		type: 'text',
 		text: 'choose one',
 		icon: selected_circle,
 	},

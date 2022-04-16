@@ -11,6 +11,9 @@ import { TypeItem } from '../UI/TypeItem'
 import { QuizAnswerCreater } from './QuizAnswerCreater'
 import { AnswerInput } from '../UI/AnswerInput'
 import { FooterQuizCreaterForm } from './FooterQuizCreaterForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { testCreatorActions } from '../../store/testCreatorSlice'
+import { useInput } from '../../hooks/useInput'
 
 const StyledQuizMakerForm = styled.form`
 	.header {
@@ -39,9 +42,11 @@ const StyledQuizMakerForm = styled.form`
 	}
 `
 
-export const QuizMakerForm = () => {
+export const QuizMakerForm = ({ information }) => {
+	const dispatch = useDispatch()
 	const [modal, ToggleModal] = useState(false)
 	const [Type, setType] = useState(QustionTypes[0])
+	const questionValue = useInput('')
 	const toggleModal = (e) => {
 		e.preventDefault()
 		ToggleModal((prev) => !prev)
@@ -51,6 +56,13 @@ export const QuizMakerForm = () => {
 		setType(obj)
 		ToggleModal((prev) => !prev)
 	}
+	const createAnswer = () => {
+		dispatch(
+			testCreatorActions.createAnswer({
+				id: information.id,
+			}),
+		)
+	}
 	return (
 		<StyledQuizMakerForm>
 			<header className='header'>
@@ -59,6 +71,8 @@ export const QuizMakerForm = () => {
 			<section className='makers_firs_part'>
 				<div className='inputWrapper'>
 					<Input
+						value={questionValue.value}
+						onChange={(e) => questionValue.onChange(e)}
 						placeholder='question without title'
 						width={100}
 						fontsize={14}
@@ -77,7 +91,7 @@ export const QuizMakerForm = () => {
 							return (
 								<TypeItem
 									onClick={() => addType(el)}
-									key={el.text}
+									key={el.id}
 								>
 									<img width={17} src={el.icon} alt='' />
 									<p>{el.text}</p>
@@ -88,9 +102,13 @@ export const QuizMakerForm = () => {
 				)}
 			</section>
 			<div className='answerList'>
-				<QuizAnswerCreater />
+				{information.answers.length > 0 &&
+					information.answers.map((el) => {
+						return <AnswerInput qwestionId={information.id} answerId={el.id} icon={Type.icon} key={el.id} />
+					})}
+				<QuizAnswerCreater onClick={createAnswer} />
 			</div>
-			<FooterQuizCreaterForm />
+			<FooterQuizCreaterForm qwestionId={information.id} />
 		</StyledQuizMakerForm>
 	)
 }

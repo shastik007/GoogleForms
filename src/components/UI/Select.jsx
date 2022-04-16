@@ -20,7 +20,6 @@ const StyledSelcet = styled.div`
 `
 
 export const Select = ({ width, height, onClick, type }) => {
-	console.log(type)
 	return (
 		<StyledSelcet onClick={onClick} height={height} width={width}>
 			<div className='wrapper'>
