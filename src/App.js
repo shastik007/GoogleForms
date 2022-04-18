@@ -1,23 +1,22 @@
 import { useSelector } from 'react-redux'
 import './App.css'
 
+// import React from 'react'
 import { Header } from './containers/Header'
 import { Quiz } from './containers/Quiz'
 
 function App() {
-  const a = ''
+   const store = useSelector((state) => {
+      return state
+   })
 
-  const state = useSelector((state) => {
-    return state
-  })
-
-  console.log(state)
-  return (
-    <div className='App'>
-      <Header />
-      <Quiz />
-    </div>
-  )
+   console.log(store)
+   return (
+      <div className="App">
+         <Header />
+         <Quiz />
+      </div>
+   )
 }
 
 export default App
