@@ -8,10 +8,10 @@ import { Select } from '../UI/Select'
 import { Modal } from '../UI/Modal'
 import { QustionTypes } from '../../data/QuestionTypes'
 import { TypeItem } from '../UI/TypeItem'
-import { QuizAnswerCreater } from './QuizAnswerCreater'
-import { AnswerInput } from '../UI/AnswerInput'
 import { FooterQuizCreaterForm } from './FooterQuizCreaterForm'
 import { testCreatorActions } from '../../store/testCreatorSlice'
+import { EmailNameAnswerInput } from './EmailAnswerInput'
+import { Answers } from './Answers'
 
 const StyledQuizMakerForm = styled.form`
    .header {
@@ -41,18 +41,23 @@ const StyledQuizMakerForm = styled.form`
 `
 
 export const QuizMakerForm = ({ information }) => {
+   console.log(information)
    const dispatch = useDispatch()
    const [modal, ToggleModal] = useState(false)
-   const [type, setType] = useState(QustionTypes[0])
+   const type = !information.type ? QustionTypes[0] : information.type
    const toggleModal = (e) => {
       e.preventDefault()
       ToggleModal((prev) => {
          return !prev
       })
-      console.log(modal)
    }
    const addType = (obj) => {
-      setType(obj)
+      dispatch(
+         testCreatorActions.changeAnswersTyps({
+            questionId: information.id,
+            type: obj,
+         })
+      )
       ToggleModal((prev) => {
          return !prev
       })
@@ -96,23 +101,6 @@ export const QuizMakerForm = ({ information }) => {
       )
    })
 
-   const AnswerRendering = React.memo(() => {
-      return (
-         information.answers.length > 0 &&
-         information.answers.map((el) => {
-            return (
-               <AnswerInput
-                  type={type.type}
-                  answerIcon={type.iconAnswer}
-                  qwestionId={information.id}
-                  answerId={el.id}
-                  key={el.id}
-               />
-            )
-         })
-      )
-   }, [])
-
    return (
       <StyledQuizMakerForm>
          <header className="header">
@@ -129,14 +117,41 @@ export const QuizMakerForm = ({ information }) => {
             </div>
             <MdOutlineImage fontSize={25} />
             <Select type={type} onClick={toggleModal} height={40} width={40} />
-
             <ModalRendering />
          </section>
          <div className="answerList">
-            <AnswerRendering />
-            <QuizAnswerCreater onClick={createAnswer} />
+            {information.type.type === 'checkbox' && (
+               <Answers
+                  type={information.type}
+                  information={information}
+                  onCreateAnswer={createAnswer}
+               />
+            )}
+            {information.type.type === 'radio' && (
+               <Answers
+                  type={information.type}
+                  information={information}
+                  onCreateAnswer={createAnswer}
+               />
+            )}
+            {information.type.type === 'date' && (
+               <Answers
+                  type={information.type}
+                  information={information}
+                  onCreateAnswer={createAnswer}
+               />
+            )}
+            {information.type.type === 'email' && (
+               <EmailNameAnswerInput text={information.type.text} />
+            )}
+            {information.type.type === 'name' && (
+               <EmailNameAnswerInput text={information.type.text} />
+            )}
          </div>
-         <FooterQuizCreaterForm qwestionId={information.id} />
+         <FooterQuizCreaterForm
+            importance={information.important}
+            qwestionId={information.id}
+         />
       </StyledQuizMakerForm>
    )
 }

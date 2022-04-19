@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useTransition, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { GrFormClose } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
 import { testCreatorActions } from '../../store/testCreatorSlice'
+import { useDebounce } from '../../hooks/useDebounce'
 
 const StyledAnswerInput = styled.input`
    text-align: center;
@@ -30,16 +31,28 @@ const StyledAnswerInputWrapper = styled.div`
    }
 `
 
-export const AnswerInput = ({ type, answerId, qwestionId, answerIcon }) => {
-   const dispatch = useDispatch()
-   const changeInput = (e) => {
+export const AnswerInput = ({
+   type,
+   answerId,
+   qwestionId,
+   isCorrect,
+   answerValue,
+}) => {
+   const [inputValue, setInputValue] = useState('')
+   const debouncedInputValue = useDebounce(inputValue, 1000)
+   useEffect(() => {
       dispatch(
          testCreatorActions.changeAnswerValue({
             qwestionId,
             answerId,
-            value: e.target.value,
+            value: debouncedInputValue,
          })
       )
+   }, [debouncedInputValue])
+   const dispatch = useDispatch()
+
+   const changeInput = (e) => {
+      setInputValue(e.target.value)
    }
    const deleteAnswer = () => {
       dispatch(
@@ -49,16 +62,31 @@ export const AnswerInput = ({ type, answerId, qwestionId, answerIcon }) => {
          })
       )
    }
+
+   const addCorrectAnsewer = () => {
+      dispatch(
+         testCreatorActions.addCorrectAnswer({
+            qwestionId,
+            answerId,
+         })
+      )
+   }
+
    return (
       <StyledAnswerInputWrapper>
          <div>
-            {answerIcon}
+            <input
+               onChange={addCorrectAnsewer}
+               checked={isCorrect}
+               type="checkbox"
+            />
             <StyledAnswerInput
                onChange={changeInput}
                fontSize={16}
                height={30}
                width={600}
                type={type}
+               value={answerValue}
             />
          </div>
          <GrFormClose onClick={deleteAnswer} />

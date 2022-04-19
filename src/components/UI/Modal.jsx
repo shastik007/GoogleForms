@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import classes from './ModalStyle.module.css'
 
 export const Modal = ({ children, cancel }) => {
-   console.log('modal is working')
    const handleKeyDown = (e) => {
       if (e.keyCode === 13) {
          cancel()

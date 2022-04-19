@@ -27,13 +27,17 @@ const StyledFooterQuizCreaterForm = styled.footer`
    }
 `
 
-export const FooterQuizCreaterForm = ({ qwestionId }) => {
+export const FooterQuizCreaterForm = ({ qwestionId, importance }) => {
    const dispatch = useDispatch()
    const copyQwestion = () => {
       dispatch(testCreatorActions.copyQwestion(qwestionId))
    }
    const deleteQwestion = () => {
       dispatch(testCreatorActions.deleteQwestion({ qwestionId }))
+   }
+
+   const changeImportance = () => {
+      dispatch(testCreatorActions.changeImportanceQuestion(qwestionId))
    }
 
    return (
@@ -43,7 +47,10 @@ export const FooterQuizCreaterForm = ({ qwestionId }) => {
             <RiDeleteBinLine onClick={deleteQwestion} size={20} />
             <div className="middle_border" />
             <span>mandatory question</span>
-            <FooterCheckbox />
+            <FooterCheckbox
+               changeHandler={changeImportance}
+               importance={importance}
+            />
             <img width={20} src={menu} alt="" />
          </div>
       </StyledFooterQuizCreaterForm>

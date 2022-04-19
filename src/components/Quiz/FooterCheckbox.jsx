@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
-export const FooterCheckbox = (props) => {
-   const { onChangeInput } = props
-
+export const FooterCheckbox = ({ changeHandler, importance }) => {
    return (
       <Label>
          <input
-            onChange={(e) => onChangeInput(e)}
+            checked={importance}
+            onChange={changeHandler}
             className="input"
             type="checkbox"
          />

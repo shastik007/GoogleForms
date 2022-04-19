@@ -1,4 +1,5 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { QustionTypes } from '../data/QuestionTypes'
 
 const init = {
    title: 'New Form',
@@ -8,8 +9,8 @@ const init = {
       {
          question: 'how are you?',
          answers: [],
-         currectAnswer: [],
          duration: 1,
+         type: 'date',
          important: false,
          id: nanoid(),
       },
@@ -25,7 +26,19 @@ export const testCreatorSlice = createSlice({
          const currentQwestion = state.questions.find((el) => el.id === id)
          currentQwestion.answers.push({
             id: nanoid(),
+            isCorrect: false,
+            value: '',
          })
+      },
+      addCorrectAnswer: (state, actions) => {
+         const { qwestionId, answerId } = actions.payload
+         const currentQuestion = state.questions.find(
+            (question) => question.id === qwestionId
+         )
+         const currectAnswer = currentQuestion.answers.find(
+            (el) => el.id === answerId
+         )
+         currectAnswer.checked = !currectAnswer.isCorrect
       },
       deleteAnswer: (state, actions) => {
          const { qwestionId, answerId } = actions.payload
@@ -48,6 +61,13 @@ export const testCreatorSlice = createSlice({
          )
          currentAnswer.value = value
       },
+      changeAnswersTyps: (state, actions) => {
+         const { questionId, type } = actions.payload
+         const currentQuestion = state.questions.find(
+            (el) => el.id === questionId
+         )
+         currentQuestion.type = type
+      },
       changeTitle: (state, actions) => {
          state.title = actions.payload
       },
@@ -62,7 +82,16 @@ export const testCreatorSlice = createSlice({
          currentQuestion.question = value
       },
       addQwestion: (state) => {
-         state.questions.push({ id: nanoid(), answers: [] })
+         state.questions.push({
+            id: nanoid(),
+            answers: [
+               {
+                  id: nanoid(),
+               },
+            ],
+            important: false,
+            type: QustionTypes[0],
+         })
       },
       deleteQwestion: (state, actions) => {
          const { qwestionId } = actions.payload
@@ -78,16 +107,23 @@ export const testCreatorSlice = createSlice({
          )
          state.questions.push({
             ...currentQwestion,
-            // answers: currentQwestion.answers.map((el) => {
-            // 	return {
-            // 		...el,
-            // 		id: nanoid(),
-            // 	}
-            // }),
+            answers: currentQwestion.answers.map((el) => {
+               return {
+                  ...el,
+                  id: nanoid(),
+               }
+            }),
             id: nanoid(),
          })
       },
-      //   changeImportanceQuestion: (state, actions) => {},
+      changeImportanceQuestion: (state, actions) => {
+         const questionId = actions.payload
+         const currentQuestion = state.questions.find(
+            (el) => el.id === questionId
+         )
+
+         currentQuestion.important = !currentQuestion.important
+      },
    },
 })
 

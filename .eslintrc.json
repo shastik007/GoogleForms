@@ -15,7 +15,7 @@
       "ecmaVersion": "latest",
       "sourceType": "module"
    },
-   "plugins": ["react"],
+   "plugins": ["react", "react-hooks"],
    "rules": {
       "react/jsx-filename-extension": [
          1,
@@ -30,7 +30,6 @@
       "no-shadow": "off",
       "react-hooks/exhaustive-deps": "off",
       "react/function-component-definition": "off",
-
       "max-len": [
          "error",
          {
@@ -42,7 +41,7 @@
       ],
       "no-console": ["warn", { "allow": ["warn", "error"] }],
 
-      // "react-hooks/rules-of-hooks": "error",
+      "react-hooks/rules-of-hooks": "error",
       "react/prop-types": "off",
       "jsx-a11y/label-has-associated-control": [
          "error",
@@ -56,6 +55,7 @@
       "no-param-reassign": [
          "error",
          { "props": true, "ignorePropertyModificationsFor": ["state"] }
-      ]
+      ],
+      "no-unused-vars": "warn"
    }
 }

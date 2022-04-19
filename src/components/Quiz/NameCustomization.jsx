@@ -1,22 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Input } from '../UI/Input'
-import { useInput } from '../../hooks/useInput'
 import { testCreatorActions } from '../../store/testCreatorSlice'
 
 export const NameCustomization = () => {
+   const { title, description } = useSelector((state) => state.testCreator)
    const dispatch = useDispatch()
-   const testTitle = useInput('')
-   const testDescription = useInput('')
 
    const onChangeTitle = (e) => {
-      dispatch(testCreatorActions.changeTitle(testTitle.value))
-      testTitle.onChange(e)
+      dispatch(testCreatorActions.changeTitle(e.target.value))
    }
    const onChangeDescription = (e) => {
-      dispatch(testCreatorActions.changeDescription(testDescription.value))
-      testDescription.onChange(e)
+      dispatch(testCreatorActions.changeDescription(e.target.value))
    }
    return (
       <StyledNameCustomization>
@@ -26,8 +22,8 @@ export const NameCustomization = () => {
             <div className="inputWrapper">
                <div>
                   <Input
+                     value={title}
                      onChange={onChangeTitle}
-                     value={testTitle.value}
                      maxLength={80}
                      placeholder="New Form"
                      width={100}
@@ -36,8 +32,8 @@ export const NameCustomization = () => {
                </div>
                <div>
                   <Input
+                     value={description}
                      onChange={onChangeDescription}
-                     value={testDescription.value}
                      placeholder="description"
                      width={100}
                      fontsize={14}
