@@ -1,5 +1,8 @@
-import React from 'react'
+/* eslint-disable no-param-reassign */
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { testCreatorActions } from '../../store/testCreatorSlice'
 import { QuizMakerForm } from './QuizMakerForm'
 
 const StyledQuizMaker = styled.div`
@@ -19,8 +22,38 @@ const StyledQuizMaker = styled.div`
 `
 
 export const QuizMaker = ({ information }) => {
+   const [currentQuestion, setCurrenQuestion] = useState(null)
+   const dispatch = useDispatch()
+   const onDragStart = (e, question) => {
+      console.log('drag', question)
+      setCurrenQuestion(question)
+   }
+   const onDragLeave = (event) => {}
+   const onDragEnd = (event) => {
+      console.log('drag end')
+   }
+   const onDragOver = (event) => {
+      event.preventDefault()
+   }
+   const onDragDrop = (event, question) => {
+      event.preventDefault()
+      dispatch(
+         testCreatorActions.dragDropAction({
+            dragQuestion: question,
+            currentQuestion,
+         })
+      )
+   }
+
    return (
-      <StyledQuizMaker>
+      <StyledQuizMaker
+         onDragStart={(e) => onDragStart(e, information)}
+         onDragLeave={(e) => onDragLeave(e)}
+         onDragEnd={(e) => onDragEnd(e)}
+         onDragOver={(e) => onDragOver(e)}
+         onDrag={(e) => onDragDrop(e, information)}
+         draggable="true"
+      >
          <div className="left_border" />
          <QuizMakerForm information={information} />
       </StyledQuizMaker>

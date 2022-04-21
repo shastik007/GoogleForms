@@ -41,10 +41,8 @@ const StyledQuizMakerForm = styled.form`
 `
 
 export const QuizMakerForm = ({ information }) => {
-   console.log(information)
    const dispatch = useDispatch()
    const [modal, ToggleModal] = useState(false)
-   const type = !information.type ? QustionTypes[0] : information.type
    const toggleModal = (e) => {
       e.preventDefault()
       ToggleModal((prev) => {
@@ -89,7 +87,7 @@ export const QuizMakerForm = ({ information }) => {
                         onClick={() => {
                            return addType(el)
                         }}
-                        key={el.id}
+                        key={el.text}
                      >
                         <img width={17} src={el.icon} alt="" />
                         <p>{el.text}</p>
@@ -116,7 +114,12 @@ export const QuizMakerForm = ({ information }) => {
                />
             </div>
             <MdOutlineImage fontSize={25} />
-            <Select type={type} onClick={toggleModal} height={40} width={40} />
+            <Select
+               type={information.type}
+               onClick={toggleModal}
+               height={40}
+               width={40}
+            />
             <ModalRendering />
          </section>
          <div className="answerList">

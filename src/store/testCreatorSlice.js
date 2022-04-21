@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 import { createSlice, nanoid } from '@reduxjs/toolkit'
 import { QustionTypes } from '../data/QuestionTypes'
 
@@ -13,6 +15,7 @@ const init = {
          type: 'date',
          important: false,
          id: nanoid(),
+         order: 0,
       },
    ],
 }
@@ -27,7 +30,7 @@ export const testCreatorSlice = createSlice({
          currentQwestion.answers.push({
             id: nanoid(),
             isCorrect: false,
-            value: '',
+            order: state.questions.length - 1,
          })
       },
       addCorrectAnswer: (state, actions) => {
@@ -38,7 +41,7 @@ export const testCreatorSlice = createSlice({
          const currectAnswer = currentQuestion.answers.find(
             (el) => el.id === answerId
          )
-         currectAnswer.checked = !currectAnswer.isCorrect
+         currectAnswer.isCorrect = !currectAnswer.isCorrect
       },
       deleteAnswer: (state, actions) => {
          const { qwestionId, answerId } = actions.payload
@@ -79,7 +82,8 @@ export const testCreatorSlice = createSlice({
          const currentQuestion = state.questions.find(
             (el) => el.id === questionId
          )
-         currentQuestion.question = value
+         console.log(value)
+         // currentQuestion.question = value
       },
       addQwestion: (state) => {
          state.questions.push({
@@ -123,6 +127,18 @@ export const testCreatorSlice = createSlice({
          )
 
          currentQuestion.important = !currentQuestion.important
+      },
+      dragDropAction: (state, actions) => {
+         const { dragQuestion, currentQuestion } = actions.payload
+         state.questions = state.questions.map((question) => {
+            if (question.id === dragQuestion.id) {
+               return { ...question, order: currentQuestion.order }
+            }
+            if (question.id === currentQuestion.id) {
+               return { ...question, order: dragQuestion.order }
+            }
+            return question
+         })
       },
    },
 })

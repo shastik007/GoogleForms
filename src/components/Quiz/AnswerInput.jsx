@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { GrFormClose } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
 import { testCreatorActions } from '../../store/testCreatorSlice'
-import { useDebounce } from '../../hooks/useDebounce'
+import { useInput } from '../../hooks/useInput'
 
 const StyledAnswerInput = styled.input`
    text-align: center;
@@ -38,22 +38,19 @@ export const AnswerInput = ({
    isCorrect,
    answerValue,
 }) => {
-   const [inputValue, setInputValue] = useState('')
-   const debouncedInputValue = useDebounce(inputValue, 1000)
-   useEffect(() => {
+   const dispatch = useDispatch()
+   const InputRef = useRef()
+
+   const onBlurInputHandler = () => {
       dispatch(
          testCreatorActions.changeAnswerValue({
-            qwestionId,
             answerId,
-            value: debouncedInputValue,
+            qwestionId,
+            value: InputRef.current.value,
          })
       )
-   }, [debouncedInputValue])
-   const dispatch = useDispatch()
-
-   const changeInput = (e) => {
-      setInputValue(e.target.value)
    }
+
    const deleteAnswer = () => {
       dispatch(
          testCreatorActions.deleteAnswer({
@@ -81,12 +78,13 @@ export const AnswerInput = ({
                type="checkbox"
             />
             <StyledAnswerInput
-               onChange={changeInput}
                fontSize={16}
                height={30}
                width={600}
                type={type}
-               value={answerValue}
+               onBlur={onBlurInputHandler}
+               ref={InputRef}
+               defaultValue={answerValue}
             />
          </div>
          <GrFormClose onClick={deleteAnswer} />

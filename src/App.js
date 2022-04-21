@@ -1,20 +1,16 @@
 import { useSelector } from 'react-redux'
 import './App.css'
-
-// import React from 'react'
-import { Header } from './containers/Header'
-import { Quiz } from './containers/Quiz'
+import { Routes, Route } from 'react-router-dom'
+import GoogleMaker from './pages/GoogleMaker'
+import GooglePreview from './pages/GooglePreview'
 
 function App() {
-   const store = useSelector((state) => {
-      return state
-   })
-
-   console.log(store)
    return (
       <div className="App">
-         <Header />
-         <Quiz />
+         <Routes>
+            <Route path="/" element={<GoogleMaker />} />
+            <Route path="preview" element={<GooglePreview />} />
+         </Routes>
       </div>
    )
 }

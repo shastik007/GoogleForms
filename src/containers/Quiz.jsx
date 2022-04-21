@@ -4,21 +4,19 @@ import styled from 'styled-components'
 import { NameCustomization } from '../components/Quiz/NameCustomization'
 import { QuizMaker } from '../components/Quiz/QuizMaker'
 import { ToolBar } from '../components/Quiz/ToolBar'
+import { sortCards } from '../utils/helpers/helpers'
 
-const StyledQuiz = styled.div`
-   background-color: #ede7f6;
-   padding-top: 15px;
-`
+const StyledQuiz = styled.div``
 
 export const Quiz = () => {
    const questions = useSelector((state) => state.testCreator.questions)
+
    return (
       <StyledQuiz>
          <NameCustomization />
-         {questions.length > 0 &&
-            questions.map((el) => {
-               return <QuizMaker key={el.id} id={el.id} information={el} />
-            })}
+         {questions.map((el) => {
+            return <QuizMaker key={el.id} id={el.id} information={el} />
+         })}
          <ToolBar />
       </StyledQuiz>
    )
