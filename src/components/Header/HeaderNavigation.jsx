@@ -24,7 +24,7 @@ export const HeaderNavigation = () => {
    const newTest = useSelector((state) => state.testCreator)
    const onSaveHandler = () => {
       dispatch(testsActions.addTest(newTest))
-      return navigate('/preview')
+      return navigate('/tests')
    }
    return (
       <StyledHeaderNavigation>

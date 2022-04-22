@@ -1,14 +1,16 @@
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { QuestionPreview } from '../components/Preview/QuestionPreview'
 
 export const Preview = () => {
    const tests = useSelector((state) => state.tests)
-   console.log(tests)
+   const { id } = useParams()
+   const CurrentIndex = tests.findIndex((test) => test.id === id)
    return (
       <div>
-         <h1>{tests[0].title}</h1>
-         <p>{tests[0].description}</p>
-         {tests[0].questions.map((question) => {
+         <h1>{tests[CurrentIndex].title}</h1>
+         <p>{tests[CurrentIndex].description}</p>
+         {tests[CurrentIndex].questions.map((question) => {
             return (
                <QuestionPreview
                   questionTitle={question.question}
