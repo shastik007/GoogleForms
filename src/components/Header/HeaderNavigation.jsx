@@ -7,6 +7,8 @@ import { IoChevronBackOutline } from 'react-icons/io5'
 import { MdOutlineNavigateNext } from 'react-icons/md'
 import { Button } from '../UI/Button'
 import { testsActions } from '../../store/testSlice'
+import { RemoveToLocalStorage } from '../../utils/helpers/helpers'
+import { testCreatorActions } from '../../store/testCreatorSlice'
 
 const StyledHeaderNavigation = styled.nav`
    ul {
@@ -22,9 +24,14 @@ export const HeaderNavigation = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const newTest = useSelector((state) => state.testCreator)
+   // eslint-disable-next-line consistent-return
    const onSaveHandler = () => {
-      dispatch(testsActions.addTest(newTest))
-      return navigate('/tests')
+      if (newTest.questions.length > 1) {
+         dispatch(testsActions.addTest(newTest))
+         dispatch(testCreatorActions.clearStore())
+         RemoveToLocalStorage('testsCreater')
+         return navigate('/tests')
+      }
    }
    return (
       <StyledHeaderNavigation>

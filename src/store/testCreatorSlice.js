@@ -2,11 +2,12 @@
 /* eslint-disable array-callback-return */
 import { createSlice, nanoid } from '@reduxjs/toolkit'
 import { QustionTypes } from '../data/QuestionTypes'
+import { GetLocalStorage } from '../utils/helpers/helpers'
 
 const init = {
    title: 'New Form',
    description: 'description',
-   id: Math.random().toString(),
+   id: nanoid(),
    questions: [
       {
          question: 'how are you?',
@@ -16,13 +17,16 @@ const init = {
          important: false,
          id: nanoid(),
          order: 0,
+         point: 5,
       },
    ],
 }
 
 export const testCreatorSlice = createSlice({
    name: 'testCreator',
-   initialState: init,
+   initialState: GetLocalStorage('testsCreater')
+      ? GetLocalStorage('testsCreater')
+      : init,
    reducers: {
       createAnswer: (state, actions) => {
          const { id } = actions.payload
@@ -30,7 +34,7 @@ export const testCreatorSlice = createSlice({
          currentQwestion.answers.push({
             id: nanoid(),
             isCorrect: false,
-            order: state.questions.length - 1,
+            checked: false,
          })
       },
       addCorrectAnswer: (state, actions) => {
@@ -82,8 +86,7 @@ export const testCreatorSlice = createSlice({
          const currentQuestion = state.questions.find(
             (el) => el.id === questionId
          )
-         console.log(value)
-         // currentQuestion.question = value
+         currentQuestion.question = value
       },
       addQwestion: (state) => {
          state.questions.push({
@@ -95,7 +98,16 @@ export const testCreatorSlice = createSlice({
             ],
             important: false,
             type: QustionTypes[0],
+            order: state.questions.length - 1,
+            point: 5,
          })
+      },
+      changeQuestionPoint: (state, actions) => {
+         const { questionId, point } = actions.payload
+         const currentQuestion = state.questions.find(
+            (question) => question.id === questionId
+         )
+         currentQuestion.point = point
       },
       deleteQwestion: (state, actions) => {
          const { qwestionId } = actions.payload
@@ -139,6 +151,21 @@ export const testCreatorSlice = createSlice({
             }
             return question
          })
+      },
+      clearStore: (state, actions) => {
+         state.title = 'New Form'
+         state.description = 'descriptions'
+         state.id = nanoid()
+         state.questions = [
+            {
+               question: 'how are you?',
+               answers: [],
+               duration: 1,
+               type: 'date',
+               important: false,
+               id: nanoid(),
+            },
+         ]
       },
    },
 })

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { MdContentCopy } from 'react-icons/md'
 import { RiDeleteBinLine } from 'react-icons/ri'
@@ -20,14 +20,22 @@ const StyledFooterQuizCreaterForm = styled.footer`
       margin: 0 5px;
    }
    .wrapper {
-      width: 40%;
+      width: 70%;
       display: flex;
       justify-content: space-around;
       align-items: center;
    }
+   .pointInput {
+      width: 10%;
+   }
 `
 
-export const FooterQuizCreaterForm = ({ qwestionId, importance }) => {
+export const FooterQuizCreaterForm = ({
+   qwestionId,
+   importance,
+   questionPoint,
+}) => {
+   const PointRef = useRef()
    const dispatch = useDispatch()
    const copyQwestion = () => {
       dispatch(testCreatorActions.copyQwestion(qwestionId))
@@ -40,6 +48,15 @@ export const FooterQuizCreaterForm = ({ qwestionId, importance }) => {
       dispatch(testCreatorActions.changeImportanceQuestion(qwestionId))
    }
 
+   const changePointHandler = () => {
+      dispatch(
+         testCreatorActions.changeQuestionPoint({
+            qwestionId,
+            point: PointRef.current.value,
+         })
+      )
+   }
+
    return (
       <StyledFooterQuizCreaterForm>
          <div className="wrapper">
@@ -47,6 +64,12 @@ export const FooterQuizCreaterForm = ({ qwestionId, importance }) => {
             <RiDeleteBinLine onClick={deleteQwestion} size={20} />
             <div className="middle_border" />
             <span>mandatory question</span>
+            <input
+               onChange={changePointHandler}
+               ref={PointRef}
+               className="pointInput"
+               type="number"
+            />
             <FooterCheckbox
                changeHandler={changeImportance}
                importance={importance}

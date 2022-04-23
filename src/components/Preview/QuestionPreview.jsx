@@ -1,11 +1,14 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
+import { testsActions } from '../../store/testSlice'
 
 const StyledQuestionPreview = styled.div`
-   width: 30%;
+   width: 40%;
    margin: 0 auto;
    padding: 0 10px;
-   background-color: white;
+   background-color: #ede7f6;
    border-radius: 10px;
+   margin-bottom: 30px;
    border: 1px solid gray;
    ul {
       margin: 0;
@@ -16,6 +19,7 @@ const StyledQuestionPreview = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-radius: 0;
    }
    h2 {
       margin: 10px 0;
@@ -30,22 +34,36 @@ const StyledAnswerTitle = styled.p`
 
 const StyledInput = styled.input``
 
-const GlobalStyle = createGlobalStyle`
-    body{
-        background-color:rgb(240, 235, 248); ;
+export const QuestionPreview = ({
+   questionTitle,
+   questionId,
+   answers,
+   testId,
+   questionType,
+}) => {
+   const dispatch = useDispatch()
+   const onCheckHandler = (id, questionId) => {
+      dispatch(
+         testsActions.changeCheckAnswer({
+            answerId: id,
+            questionId,
+            testId,
+            questionType,
+         })
+      )
    }
-`
-
-export const QuestionPreview = ({ questionTitle, id, answers }) => {
    return (
       <StyledQuestionPreview>
-         <GlobalStyle />
-         <h2 id={id}>{questionTitle}</h2>
+         <h2>{questionTitle}</h2>
          <ul>
             {answers.map((answer) => {
                return (
                   <li>
-                     <StyledInput type="checkbox" />
+                     <StyledInput
+                        checked={answer.checked}
+                        onChange={() => onCheckHandler(answer.id, questionId)}
+                        type="checkbox"
+                     />
                      <StyledAnswerTitle>{answer.value}</StyledAnswerTitle>
                   </li>
                )
