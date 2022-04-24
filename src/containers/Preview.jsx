@@ -69,6 +69,7 @@ export const Preview = () => {
          {tests[CurrentIndex].questions.map((question) => {
             return (
                <QuestionPreview
+                  key={question.id}
                   questionTitle={question.question}
                   answers={question.answers}
                   checked={question.checked}

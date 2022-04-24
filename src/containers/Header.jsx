@@ -47,10 +47,10 @@ export function Header() {
             <HeaderNavigation />
          </div>
          <div className="navigation">
-            <NavLink style={{ 'text-decoration': 'none' }} to="/">
+            <NavLink style={{ textDecoration: 'none' }} to="/">
                TestCreater
             </NavLink>
-            <NavLink style={{ 'text-decoration': 'none' }} to="/tests">
+            <NavLink style={{ textDecoration: 'none' }} to="/tests">
                Tests
             </NavLink>
          </div>

@@ -14,6 +14,7 @@ export const TestList = () => {
          {tests.tests.map((test) => {
             return (
                <TestItem
+                  key={test.id}
                   title={test.title}
                   description={test.description}
                   questions={test.questions}

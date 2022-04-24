@@ -60,7 +60,7 @@ export const QuestionPreview = ({
          <ul>
             {answers.map((answer) => {
                return (
-                  <li>
+                  <li key={answer.id}>
                      <StyledInput
                         checked={answer.checked}
                         onChange={() => onCheckHandler(answer.id, questionId)}
