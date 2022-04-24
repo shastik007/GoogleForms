@@ -31,7 +31,7 @@ export const EmailPreviewItem = ({ title, description }) => {
                background="#ede7f6"
                fontsize={20}
                textAlign="center"
-               placeholder="email"
+               placeholder="abdillaevJetigen@gmail.com"
                width={80}
             />
          </div>

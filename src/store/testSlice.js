@@ -9,7 +9,9 @@ import { GetLocalStorage } from '../utils/helpers/helpers'
 
 const init = {
    tests: [],
+   pointCount: 0,
    allPoint: 0,
+   allComplete: false,
 }
 
 export const testsSlice = createSlice({
@@ -58,8 +60,8 @@ export const testsSlice = createSlice({
             let countOfCorrectChoise = 0
             let countOfWrongAnswers = 0
             let percentOfCorrectChoise = 0
-            let percentOfWrongChoise = 0
             let pointForAnswers = 0
+
             const currentQuestionPoint = currentTest.questions[i].point
             currentTest.questions[i].answers.map((answer) => {
                if (answer.isCorrect) {
@@ -71,6 +73,7 @@ export const testsSlice = createSlice({
                if (!answer.isCorrect && answer.checked) {
                   countOfWrongAnswers += 1
                }
+
                return answer
             })
             percentOfCorrectChoise =
@@ -78,10 +81,25 @@ export const testsSlice = createSlice({
             pointForAnswers =
                (currentQuestionPoint * percentOfCorrectChoise) / 100
 
-            state.allPoint +=
+            state.pointCount +=
                pointForAnswers -
                countOfWrongAnswers * (pointForAnswers / countOfAnswers)
+
+            if (currentTest.questions[i].important) {
+               const IndexOfCheckedAnswerForMandotaryQuestion =
+                  currentTest.questions[i].answers.findIndex(
+                     (el) => el.checked === true
+                  )
+               if (IndexOfCheckedAnswerForMandotaryQuestion !== -1) {
+                  state.allComplete = false
+               } else {
+                  state.allComplete = true
+               }
+            }
          }
+
+         state.allPoint = state.pointCount
+         state.pointCount = 0
       },
    },
 })

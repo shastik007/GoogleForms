@@ -1,22 +1,41 @@
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { createGlobalStyle } from 'styled-components'
 import { EmailPreviewItem } from '../components/Preview/EmailPreviewItem'
 import { QuestionPreview } from '../components/Preview/QuestionPreview'
 import { testsActions } from '../store/testSlice'
+import { PreviewModal } from '../components/UI/PreviewModal'
 
 export const Preview = () => {
-   const tests = useSelector((state) => state.tests.tests)
+   const [resultModal, setResultModal] = useState(false)
+   const { tests, allPoint, allComplete } = useSelector((state) => state.tests)
    const { id } = useParams()
    const dispatch = useDispatch()
    const CurrentIndex = tests.findIndex((test) => test.id === id)
 
-   const showResultHandler = () => {
-      dispatch(testsActions.showResult(id))
+   const toggleModal = () => {
+      setResultModal((prev) => !prev)
    }
 
+   const showResultHandler = () => {
+      dispatch(testsActions.showResult(id))
+      toggleModal()
+   }
+
+   const ResultModal = React.memo(() => {
+      return (
+         <PreviewModal cancel={toggleModal}>
+            {!allComplete && (
+               <header>{`your point is ${allPoint.toFixed(2)}`}</header>
+            )}
+            {allComplete && <h2>enter all fields</h2>}
+         </PreviewModal>
+      )
+   })
+
    return (
-      <div>
+      <>
+         {resultModal && <ResultModal />}
          <EmailPreviewItem
             title={tests[CurrentIndex].title}
             description={tests[CurrentIndex].description}
@@ -30,6 +49,7 @@ export const Preview = () => {
                   questionId={question.id}
                   testId={tests[CurrentIndex].id}
                   questionType={question.type}
+                  importance={question.important}
                />
             )
          })}
@@ -38,6 +58,6 @@ export const Preview = () => {
                showResult
             </button>
          </div>
-      </div>
+      </>
    )
 }

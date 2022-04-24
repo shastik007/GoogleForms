@@ -21,9 +21,8 @@ const StyledQuestionPreview = styled.div`
       justify-content: space-between;
       border-radius: 0;
    }
-   h2 {
-      margin: 10px 0;
-      width: 60%;
+   .warn {
+      color: red;
    }
 `
 
@@ -40,6 +39,7 @@ export const QuestionPreview = ({
    answers,
    testId,
    questionType,
+   importance,
 }) => {
    const dispatch = useDispatch()
    const onCheckHandler = (id, questionId) => {
@@ -52,9 +52,11 @@ export const QuestionPreview = ({
          })
       )
    }
+
    return (
       <StyledQuestionPreview>
          <h2>{questionTitle}</h2>
+         {importance && <span className="warn">обязательный вопрос</span>}
          <ul>
             {answers.map((answer) => {
                return (
@@ -62,7 +64,7 @@ export const QuestionPreview = ({
                      <StyledInput
                         checked={answer.checked}
                         onChange={() => onCheckHandler(answer.id, questionId)}
-                        type="checkbox"
+                        type={questionType.type}
                      />
                      <StyledAnswerTitle>{answer.value}</StyledAnswerTitle>
                   </li>
