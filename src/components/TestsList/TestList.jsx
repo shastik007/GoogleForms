@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useBeforeunload } from 'react-beforeunload'
 import { useSelector } from 'react-redux'
 import { SaveLocalStorage } from '../../utils/helpers/helpers'
 import { TestItem } from './TestItem'

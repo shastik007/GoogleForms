@@ -24,13 +24,12 @@ const StyledQuizMaker = styled.div`
 export const QuizMaker = ({ information }) => {
    const [currentQuestion, setCurrenQuestion] = useState(null)
    const dispatch = useDispatch()
-   const onDragStart = (e, question) => {
-      console.log('drag', question)
+   const onDragStart = (question) => {
       setCurrenQuestion(question)
    }
-   const onDragLeave = (event) => {}
-   const onDragEnd = (event) => {
-      console.log('drag end')
+   const onDragLeave = () => {}
+   const onDragEnd = () => {
+      // console.log('drag end')
    }
    const onDragOver = (event) => {
       event.preventDefault()

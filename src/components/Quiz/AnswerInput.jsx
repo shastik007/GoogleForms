@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import { GrFormClose } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
 import { testCreatorActions } from '../../store/testCreatorSlice'
-import { useInput } from '../../hooks/useInput'
 
 const StyledAnswerInput = styled.input`
    text-align: center;

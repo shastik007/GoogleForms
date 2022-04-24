@@ -5,7 +5,7 @@ import { useBeforeunload } from 'react-beforeunload'
 import { NameCustomization } from '../components/Quiz/NameCustomization'
 import { QuizMaker } from '../components/Quiz/QuizMaker'
 import { ToolBar } from '../components/Quiz/ToolBar'
-import { sortCards, SaveLocalStorage } from '../utils/helpers/helpers'
+import { SaveLocalStorage } from '../utils/helpers/helpers'
 
 const StyledQuiz = styled.div``
 

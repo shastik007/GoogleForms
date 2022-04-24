@@ -10,7 +10,6 @@ import { QustionTypes } from '../../data/QuestionTypes'
 import { TypeItem } from '../UI/TypeItem'
 import { FooterQuizCreaterForm } from './FooterQuizCreaterForm'
 import { testCreatorActions } from '../../store/testCreatorSlice'
-import { EmailNameAnswerInput } from './EmailAnswerInput'
 import { Answers } from './Answers'
 
 const StyledQuizMakerForm = styled.form`

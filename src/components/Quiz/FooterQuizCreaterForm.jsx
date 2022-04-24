@@ -30,11 +30,7 @@ const StyledFooterQuizCreaterForm = styled.footer`
    }
 `
 
-export const FooterQuizCreaterForm = ({
-   qwestionId,
-   importance,
-   questionPoint,
-}) => {
+export const FooterQuizCreaterForm = ({ qwestionId, importance }) => {
    const PointRef = useRef()
    const dispatch = useDispatch()
    const copyQwestion = () => {

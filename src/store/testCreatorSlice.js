@@ -153,7 +153,7 @@ export const testCreatorSlice = createSlice({
             return question
          })
       },
-      clearStore: (state, actions) => {
+      clearStore: (state) => {
          state.title = 'New Form'
          state.description = 'descriptions'
          state.id = nanoid()
