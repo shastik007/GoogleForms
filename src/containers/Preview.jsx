@@ -1,10 +1,20 @@
+/* eslint-disable eqeqeq */
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { EmailPreviewItem } from '../components/Preview/EmailPreviewItem'
 import { QuestionPreview } from '../components/Preview/QuestionPreview'
 import { testsActions } from '../store/testSlice'
 import { PreviewModal } from '../components/UI/PreviewModal'
+import { ResponseForPoints } from '../data/ResponseForPoints'
+
+const StyledWrapperModal = styled.div`
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+`
 
 export const Preview = () => {
    const [resultModal, setResultModal] = useState(false)
@@ -26,9 +36,25 @@ export const Preview = () => {
       return (
          <PreviewModal cancel={toggleModal}>
             {!allComplete && (
-               <header>{`your point is ${allPoint.toFixed(2)}`}</header>
+               <StyledWrapperModal>
+                  <header>Your Points</header>
+                  <h3>{`your point is ${allPoint.toFixed(2)}`}</h3>
+                  <h4>
+                     {allPoint.toFixed(2) == 0 &&
+                        allPoint.toFixed(2) < 5 &&
+                        ResponseForPoints[0]}
+                     {allPoint.toFixed(2) >= 5 &&
+                        allPoint.toFixed(2) < 10 &&
+                        ResponseForPoints[1]}
+                     {allPoint.toFixed(2) >= 10 && ResponseForPoints[2]}
+                  </h4>
+               </StyledWrapperModal>
             )}
-            {allComplete && <h2>enter all fields</h2>}
+            {allComplete && (
+               <StyledWrapperModal>
+                  <h2>enter all fields</h2>
+               </StyledWrapperModal>
+            )}
          </PreviewModal>
       )
    })

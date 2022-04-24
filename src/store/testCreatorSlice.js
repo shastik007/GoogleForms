@@ -103,10 +103,11 @@ export const testCreatorSlice = createSlice({
          })
       },
       changeQuestionPoint: (state, actions) => {
-         const { questionId, point } = actions.payload
+         const { qwestionId, point } = actions.payload
          const currentQuestion = state.questions.find(
-            (question) => question.id === questionId
+            (question) => question.id === qwestionId
          )
+
          currentQuestion.point = point
       },
       deleteQwestion: (state, actions) => {

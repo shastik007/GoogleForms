@@ -144,12 +144,6 @@ export const QuizMakerForm = ({ information }) => {
                   onCreateAnswer={createAnswer}
                />
             )}
-            {information.type.type === 'email' && (
-               <EmailNameAnswerInput text={information.type.text} />
-            )}
-            {information.type.type === 'name' && (
-               <EmailNameAnswerInput text={information.type.text} />
-            )}
          </div>
          <FooterQuizCreaterForm
             importance={information.important}
