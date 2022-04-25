@@ -36,7 +36,7 @@ const StyledHeader = styled.header`
    }
 `
 
-export function Header() {
+function Header() {
    return (
       <StyledHeader>
          <div className="header">
@@ -57,3 +57,5 @@ export function Header() {
       </StyledHeader>
    )
 }
+
+export default Header
